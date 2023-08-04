@@ -38,9 +38,10 @@ void BaseCamera::BaseLookAt(float3 cameraPos, float3 cameraTarget, float3 camera
 {
     this->m_CameraPos = cameraPos;
     this->m_CameraDir = normalize(cameraTarget - cameraPos);
-    this->m_CameraUp = normalize(cameraUp);
-    this->m_CameraRight = normalize(cross(this->m_CameraDir, this->m_CameraUp));
-    this->m_CameraUp = normalize(cross(this->m_CameraRight, this->m_CameraDir));
+// #OWLREE_CHANGE_BEGIN
+    this->m_CameraRight = normalize(cross(cameraUp, this->m_CameraDir));
+    this->m_CameraUp = normalize(cross(this->m_CameraDir, this->m_CameraRight));
+// #OWLREE_CHANGE_END
 
     UpdateWorldToView();
 }
@@ -145,7 +146,9 @@ void FirstPersonCamera::UpdateCamera(dm::float3 cameraMoveVec, dm::affine3 camer
     m_CameraPos += cameraMoveVec;
     m_CameraDir = normalize(cameraRotation.transformVector(m_CameraDir));
     m_CameraUp = normalize(cameraRotation.transformVector(m_CameraUp));
-    m_CameraRight = normalize(cross(m_CameraDir, m_CameraUp));
+// #OWLREE_CHANGE_BEGIN
+    m_CameraRight = normalize(cross(m_CameraUp, m_CameraDir));
+// #OWLREE_CHANGE_END
 
     UpdateWorldToView();
 }
@@ -182,8 +185,10 @@ void FirstPersonCamera::Animate(float deltaT)
         float yaw = m_RotateSpeed * mouseMove.x;
         float pitch = m_RotateSpeed * mouseMove.y;
 
-        cameraRotation = rotation(float3(0.f, 1.f, 0.f), -yaw);
-        cameraRotation = rotation(m_CameraRight, -pitch) * cameraRotation;
+// #OWLREE_CHANGE_BEGIN
+        cameraRotation = rotation(float3(0.f, 1.f, 0.f), yaw);
+        cameraRotation = rotation(m_CameraRight, pitch) * cameraRotation;
+// #OWLREE_CHANGE_END
 
         cameraDirty = true;
     }
