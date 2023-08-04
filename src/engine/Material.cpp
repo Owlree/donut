@@ -22,6 +22,10 @@
 
 #include <donut/engine/SceneTypes.h>
 
+// #OWLREE_CHANGE_BEGIN
+#include <cstddef>
+// #OWLREE_CHANGE_END
+
 using namespace donut::math;
 #include <donut/shaders/material_cb.h>
 
@@ -124,6 +128,14 @@ namespace donut::engine
         constants.padding2 = 0;
         constants.padding3 = 0;
     }
+
+// #OWLRE_CHANGE_BEGIN
+    void Material::FillConstantBuffer(std::byte* const bytes) const 
+    {
+        MaterialConstants* const constants{ reinterpret_cast<MaterialConstants*>(bytes) };
+        FillConstantBuffer(*constants);
+    }
+// #OWLREE_CHANGE_END
 
     bool Material::SetProperty(const std::string& name, const dm::float4& value)
     {

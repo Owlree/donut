@@ -28,6 +28,10 @@
 #include <nvrhi/nvrhi.h>
 #include <memory>
 
+// #OWLREE_CHANGE_BEGIN
+#include <cstddef>
+// #OWLREE_CHANGE_END
+
 struct MaterialConstants;
 struct LightConstants;
 struct LightProbeConstants;
@@ -148,6 +152,9 @@ namespace donut::engine
 
         virtual ~Material() = default;
         void FillConstantBuffer(struct MaterialConstants& constants) const;
+// #OWLREE_CHANGE_BEGIN
+        void FillConstantBuffer(std::byte* bytes) const;
+// #OWLREE_CHANGE_END
         bool SetProperty(const std::string& name, const dm::float4& value);
     };
 
