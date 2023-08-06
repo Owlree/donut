@@ -56,6 +56,14 @@ void IView::FillPlanarViewConstants(PlanarViewConstants& constants) const
     constants.pixelOffset = GetPixelOffset();
 }
 
+// #OWLREE_CHANGE_BEGIN
+void IView::FillPlanarViewConstants(std::byte* bytes) const 
+{
+    PlanarViewConstants* constants{ reinterpret_cast<PlanarViewConstants*>(bytes) };
+    FillPlanarViewConstants(*constants);
+}
+// #OWLREE_CHANGE_END
+
 void PlanarView::UpdateCache()
 {
     if (m_CacheValid)

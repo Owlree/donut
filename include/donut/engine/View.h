@@ -56,6 +56,9 @@ namespace donut::engine
     {
     public:
         virtual void FillPlanarViewConstants(PlanarViewConstants& constants) const;
+// #OWLREE_CHANGE_BEGIN
+        virtual void FillPlanarViewConstants(std::byte* bytes) const;
+// #OWLREE_CHANGE_END
 
         [[nodiscard]] virtual nvrhi::ViewportState GetViewportState() const = 0;
         [[nodiscard]] virtual nvrhi::VariableRateShadingState GetVariableRateShadingState() const = 0;
