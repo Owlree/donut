@@ -60,6 +60,18 @@ namespace donut::app
         [[nodiscard]] const dm::float3& GetDir() const { return m_CameraDir; }
         [[nodiscard]] const dm::float3& GetUp() const { return m_CameraUp; }
 
+// #OWLREE_CHANGE_BEGIN
+        [[nodiscard]] float GetMoveSpeed() const 
+        {
+            return m_MoveSpeed;
+        }
+
+        [[nodiscard]] float GetRotateSpeed() const
+        {
+            return m_RotateSpeed;
+        }
+// #OWLREE_CHANGE_END
+
     protected:
         // This can be useful for derived classes while not necessarily public, i.e., in a third person
         // camera class, public clients cannot direct the gaze point.
